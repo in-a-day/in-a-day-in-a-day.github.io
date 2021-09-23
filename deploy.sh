@@ -11,12 +11,11 @@ cd docs/.vuepress/dist
 
 # deploy to github pages
 echo 'nichijou.cloud' > CNAME
-
-githubUrl=https://github.com/in-a-day/in-a-day.github.io.git
+msg='deploy'
 git init
 git add -A
 git commit -m "${msg}"
-git push -f $githubUrl main:gh-pages # 推送到github gh-pages分支
+git push -f http://github.com/in-a-day/in-a-day.github.io.git master:vuepress-page
 
 # deploy to coding pages
 # echo 'www.xugaoyi.com\nxugaoyi.com' > CNAME  # 自定义域名

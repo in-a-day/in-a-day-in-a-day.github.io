@@ -10,7 +10,8 @@ module.exports = [
       { text: 'Docker', link: '/docker/' },
       { text: 'Java', link: '/java/' },
       { text: 'Python', link: '/python/' },
-      { text: 'Algorithm', link: '/algorithm/'}
+      { text: 'Algorithm', link: '/algorithm/'},
+      { text: 'Git', link: '/git/'},
     ],
   },
   {
