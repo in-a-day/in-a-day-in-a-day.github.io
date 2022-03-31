@@ -87,10 +87,10 @@ avatar:
 disable_top_img: false
 
 # 顶部图片
-index_img: /images/index.jpg
+index_img: /images/out37.png
 
 # 默认的 top_img，当页面的 top_img 没有配置时，会显示 default_top_img
-default_top_img: /images/index.jpg 
+default_top_img: /images/out37.png
 # 归档页top img
 archive_img:
 
