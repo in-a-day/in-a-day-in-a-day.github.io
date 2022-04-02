@@ -4,10 +4,12 @@ date: 2022-03-29 22:47:48
 tags: git
 categories: git
 ---
+git相关配置信息
+
 
 ## git config 配置git相关信息
 常用参数配置:
-- git config --global 全局设置git配置, 通常配置文件在~/.gitconfig或者~/.config/git/config中
+- git config --global 全局设置git配置, 通常配置文件在`~/.gitconfig`或者`~/.config/git/config`中
 - git config --list --show-origin 显示所有配置及文件所在位置
 - git config --global core.editor vim 将默认文本编辑器设置为vim
 
