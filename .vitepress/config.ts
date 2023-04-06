@@ -11,8 +11,8 @@ async function config() {
         "link",
         {
           rel: "icon",
-          type: "image/svg",
-          href: "/z.png",
+          type: "image/png",
+          href: "/b.png",
         },
       ],
       [
@@ -41,7 +41,7 @@ async function config() {
     lastUpdated: false,
     themeConfig: {
       // repo: "clark-cui/homeSite",
-      logo: "/z.png",
+      logo: "/a.png",
       docsDir: "/",
       // docsBranch: "master",
       posts: await getPosts(),

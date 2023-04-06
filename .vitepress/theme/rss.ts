@@ -24,8 +24,8 @@ const OPTIONS: FeedOptions = {
     rss: DOMAIN + "/feed.xml",
   },
   author: AUTHOR,
-  image: "https://dszdsxc.com/z.png",
-  favicon: "https://dszdsxc.com/z.png",
+  image: "https://dszdsxc.com/a.png",
+  favicon: "https://dszdsxc.com/b.png",
 };
 
 const markdown = MarkdownIt({
