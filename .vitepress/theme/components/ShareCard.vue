@@ -1,7 +1,7 @@
 <template>
   <div class="shareCard">
     <h1 class="title" v-if="theme.author.name">
-      <span>Hi, I'm {{theme.author.name}}👻</span>
+      <span>Hi, I'm {{theme.author.name}} 💭</span>
     </h1>
     <p class="description" v-if="theme.author.description">
       {{theme.author.description}}

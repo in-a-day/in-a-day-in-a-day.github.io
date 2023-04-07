@@ -6,7 +6,7 @@
     </template>
     <template #doc-after>
       <div>
-        <button @click="back">Back</button>
+        <button @click="back">⬅️  Back</button>
       </div>
     </template>
     <!-- Home slot-->
