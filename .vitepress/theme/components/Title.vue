@@ -3,18 +3,10 @@
   <div class="date">🕒 Published at: {{ publishDate }}</div>
 </template>
 <script lang="ts" setup>
-import { useData } from "vitepress";
+import { useData, PageData } from "vitepress";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
-type pageData = {
-  description: string;
-  title: string;
-  frontmatter: object;
-  headers: object[];
-  lastUpdated: number;
-  relativePath: string;
-};
-const pageData: pageData = useData().page.value;
+const pageData: PageData = useData().page.value;
 const { title, description, lastUpdated, frontmatter } = pageData;
 dayjs.extend(relativeTime);
 

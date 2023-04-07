@@ -3,11 +3,11 @@
     <h1 class="tags-header">Tags</h1>
     <div class="tags">
       <span
-        @click="toggleTag(key)"
+        @click="toggleTag(key.toString())"
         v-for="(item, key) in data"
         class="tag"
         :style="getFontSize(data[key].length)"
-        :class="{ activetag: selectTag === key }"
+        :class="{ activetag: selectTag === key.toString() }"
       >
         {{ key }} <span class="tag-length">{{ data[key].length }}</span>
       </span>

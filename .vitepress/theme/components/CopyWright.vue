@@ -1,14 +1,21 @@
 <template>
   <footer>
+    Powerd by 
+    <a :href="theme.author.git" target="_blank" title="作者"
+      >zabbits</a
+    >
+    |
     Theme by
     <a href="https://github.com/clark-cui/" target="_blank" title="作者"
       >clark-cui</a
     >
-    | Copyright © 2019-{{ date }} | MIT License
+    | Copyright © 2023-{{ date }} | MIT License
   </footer>
 </template>
 <script lang="ts" setup>
+import { useData } from 'vitepress';
 const date = new Date().getFullYear();
+const { theme } = useData()
 </script>
 <style scoped>
 footer {

@@ -4,8 +4,8 @@ import { buildBlogRSS } from "./theme/rss";
 async function config() {
   return {
     lang: "en-US",
-    title: "nichijou",
-    description: "Home of nichijou",
+    title: "zabbits",
+    description: "Home of zabbits",
     head: [
       [
         "link",
@@ -19,7 +19,7 @@ async function config() {
         "meta",
         {
           name: "author",
-          content: "nichijou",
+          content: "zabbits",
         },
       ],
       [
@@ -33,14 +33,19 @@ async function config() {
         "meta",
         {
           property: "og:description",
-          content: "Home of nichijou",
+          content: "Home of zabbits",
         },
       ],
     ],
     // cleanUrls: "with-subfolders",
     lastUpdated: false,
     themeConfig: {
-      // repo: "clark-cui/homeSite",
+      author: { 
+        avatar: "/a.png",
+        name: "zabbits",
+        description: "Life is strange.",
+        git: "https://github.com/zabbits/",
+      },
       logo: "/a.png",
       docsDir: "/",
       // docsBranch: "master",

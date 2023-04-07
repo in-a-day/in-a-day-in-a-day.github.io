@@ -1,34 +1,33 @@
 <template>
-  <div class="pic"></div>
+  <div class="content" v-if="theme.author.avatar">
+    <img :src="theme.author.avatar" width="135" height="135" class="avator"/>
+  </div>
 </template>
 <script lang="ts" setup>
-import { onMounted } from "vue";
-import lottie from "lottie-web";
-onMounted(() => {
-  // storage lottie
-  const svgContainer = document.getElementById("svgContainer");
-  if (svgContainer) {
-    return;
-  }
-  // created insertNode and add style
-  const insertNode = document.createElement("div");
-  insertNode.id = "svgContainer";
-  insertNode.style.width = "300px";
-  insertNode.style.margin = "0 auto";
-  const pic = document.getElementsByClassName("pic")[0];
-  pic.appendChild(insertNode);
-  // created lottie
-  const animItem = lottie.loadAnimation({
-    container: insertNode,
-    renderer: "svg",
-    loop: true,
-    path: "https://labs.nearpod.com/bodymovin/demo/markus/isometric/markus2.json",
-  });
-});
+import { useData } from "vitepress";
+const { theme } = useData();
 </script>
 <style scoped>
-.pic {
-  text-align: center;
-  height: 300px;
+.content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+}
+.avator {
+  border-radius: 10%;
+  border: 0px solid var(--vp-avator-border);
+}
+
+@keyframes avator-transform {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.avator:hover {
+  animation: 5s linear 0s infinite avator-transform;
 }
 </style>

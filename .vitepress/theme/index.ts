@@ -7,7 +7,7 @@ import "./custom.css";
 export default {
   ...DefaultTheme,
   Layout: MyLayout,
-  enhanceApp(ctx) {
+  enhanceApp(ctx: any) {
     DefaultTheme.enhanceApp(ctx);
     const { app } = ctx;
     // register global components
