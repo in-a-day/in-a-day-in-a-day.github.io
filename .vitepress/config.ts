@@ -41,7 +41,7 @@ async function config() {
     lastUpdated: false,
     themeConfig: {
       author: { 
-        avatar: "/a.png",
+        avatar: "/c.png",
         name: "zabbits",
         description: "Life is strange.",
         git: "https://github.com/zabbits/",

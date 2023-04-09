@@ -1,6 +1,6 @@
 <template>
   <div class="content" v-if="theme.author.avatar">
-    <img :src="theme.author.avatar" width="135" height="135" class="avator"/>
+    <img :src="theme.author.avatar" width="80" height="135" class="avator"/>
   </div>
 </template>
 <script lang="ts" setup>
