@@ -12,7 +12,7 @@ jobs:
       id-token: write
     environment:
       name: github-pages
-      url: zabbits.com
+      url: https://www.zabbits.com
     steps:
       - uses: actions/checkout@v3
         with:
