@@ -12,7 +12,7 @@ tags:
 下载[SDK Platform-Tools](https://developer.android.com/studio/releases/platform-tools),
 将解压出来的adb放到可执行路径, mac可以放到如下位置:
 ```bash
-cp adb /usr/local/bin/
+sudo cp adb /usr/local/bin/
 ```
 
 ### 配置btsnooz.py
