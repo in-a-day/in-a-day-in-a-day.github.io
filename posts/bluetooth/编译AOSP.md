@@ -7,9 +7,15 @@ tags:
 ---
 
 ## 写在前面
-基于Ubuntu 22.04
+本文基于以下环境:  
+OS: Ubuntu 22.04, CPU: i7 8700, 内存: 16G  
 
 ## 下载AOSP源码
+建立python软链接:
+```bash
+sudo ln -s /usr/bin/python3 /usr/bin/python
+```
+
 安装git:
 ```bash
 sudo apt install git
@@ -57,13 +63,35 @@ repo init -u https://mirrors.tuna.tsinghua.edu.cn/git/AOSP/platform/manifest
 repo init -u https://mirrors.tuna.tsinghua.edu.cn/git/AOSP/platform/manifest -b android-13.0.0_r40
 ```
 
-同步源码树:
+同步源码:
 ```bash
 repo sync -j4
 ```
 
 
 ## 编译AOSP
+安装相关依赖:
+```bash
+sudo apt-get install git-core gnupg flex bison build-essential zip curl zlib1g-dev libc6-dev-i386 libncurses5 lib32ncurses5-dev x11proto-core-dev libx11-dev lib32z1-dev libgl1-mesa-dev libxml2-utils xsltproc unzip fontconfig
+```
+
+如果编译master分支, 不需要安装JDK, 否则需要自行安装:
+```bash
+sudo apt-get install openjdk-8-jdk
+```
+
+初始化环境:
+```bash
+source build/envsetup.sh
+```
+
+`envsetup.sh`脚本导入了一些用于操作安卓源码的命令, 使用`hmm`可以查看所有命令:
+```bash
+hmm
+```
+
+TODO
+
 
 
 ## 参考文档
