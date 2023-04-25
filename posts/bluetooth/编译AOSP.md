@@ -46,10 +46,10 @@ chmod a+x ~/bin/repo
 epxort PATH=~/bin:$PATH
 ```
 
-创建工作目录:
+创建工作目录(即AOSP源码存放位置):
 ```bash
-mkdir aosp
-cd aosp
+mkdir ~/aosp
+cd ~/aosp
 ```
 
 初始化仓库:
@@ -87,6 +87,10 @@ TODO
 ### 初始化环境
 ```bash
 source build/envsetup.sh
+```
+当然这些环境只对当前session有效, 所以如果你想持久化, 加入你的配置文件中:
+```bash
+echo source ~/aosp/build/envsetup.sh >> ~/.bashrc
 ```
 
 `envsetup.sh`脚本导入了一些用于操作安卓源码的命令, 使用`hmm`可以查看所有命令:
@@ -140,6 +144,70 @@ lunch aosp_redfin-userdebug
 ```bash
 m
 ```
+历经3个小时完成编译. 编译完成的结果在`~/aosp/out/target/product/redfin`下.
+
+
+## 刷写设备
+配置需要刷写镜像位置(即你的编译输出目录):
+```bash
+export android_product_out=~/aosp/out/target/product/redfin
+```
+
+配置[用户组](https://developer.android.com/studio/run/device#setting-up)相关, 完成后需要刷新用户组信息(重新登录或重启, 通过`id`命令查看是否成功):
+```bash
+sudo usermod -aG plugdev $LOGNAME
+sudo apt-get install android-sdk-platform-tools-common
+```
+如未正确配置用户组, 后续步骤会出现以下错误:
+```bash
+error: insufficient permissions for device: missing udev rules? user is in the plugdev group
+See [http://developer.android.com/tools/device.html] for more information
+```
+
+如果你尚未拥有`fastboot`和`adb`, 可以在`~/aosp`目录下使用`make`构建:
+```bash
+make fastboot adb
+# 编译结果在~/aosp/out/host/linux-x86/bin下
+cd ~/aosp/out/host/linux-x86/bin
+# 放入可执行路径
+cp fastboot adb ~/bin
+```
+
+在正式开始之前, 确保你的设备开启了oem, 开发者模式以及USB调试.
+
+进入fastboot模式:
+```bash
+adb reboot bootloader
+```
+
+解锁bootloader:
+```bash
+fastboot flashing unlock
+# 在屏幕上确认解锁
+```
+
+刷写设备: 
+```bash
+fastboot flashall -w
+```
+最后你终于得到了一台运行AOSP的pixel 5...
+
+
+## 写在后面
+如果你想要用IDEA打开源码, 通过idegen生成是个好的方法:
+```bash
+make idegen
+```
+运行`development/tools/idegen/idegen.sh`:
+```bash
+sudo development/tools/idegen/idegen.sh
+```
+在`~/aosp`目录下会生成:
+```bash
+android.iml
+android.ipr
+```
+用idea打卡`android.ipr`即可
 
 
 ## 参考文档
@@ -148,3 +216,7 @@ m
 [Android版本列表](https://source.android.com/docs/setup/about/build-numbers#source-code-tags-and-builds)
 
 [AOSP官方下载文档](https://source.android.com/docs/setup/download/downloading)
+
+[编译AOSP](https://source.android.com/docs/setup/build/building)
+
+[刷写Android设备](https://source.android.com/docs/setup/build/running)
