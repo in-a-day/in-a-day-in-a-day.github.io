@@ -193,21 +193,24 @@ fastboot flashall -w
 最后你终于得到了一台运行AOSP的pixel 5...
 
 
-## 写在后面
-如果你想要用IDEA打开源码, 通过idegen生成是个好的方法:
+## 阅读源码
+如果你想要用IDEA打开源码, 推荐使用[aidegen](https://android.googlesource.com/platform/tools/asuite/+/refs/heads/master/aidegen/README.md).
+
+首先配置一下环境:
 ```bash
-make idegen
+# 到你的源码根目录
+cd ~/aosp
+source build/envsetup.sh
+# 一定要设置版本
+lunch aosp_redfin-userdebug
 ```
-运行`development/tools/idegen/idegen.sh`:
+
+这里我只打开`frameworks/base`和`packages/modules/Bluetooth/`:
 ```bash
-sudo development/tools/idegen/idegen.sh
+# -i 指定ide类型, j=IntelliJ s=Android Studio e=Eclipse c=CLion v=VS Code
+aidegen frameworks/base packages/modules/Bluetooth/ -i j
 ```
-在`~/aosp`目录下会生成:
-```bash
-android.iml
-android.ipr
-```
-用idea打卡`android.ipr`即可
+具体的命令查看aidegen的[官方文档](https://android.googlesource.com/platform/tools/asuite/+/refs/heads/master/aidegen/README.md)
 
 
 ## 参考文档
