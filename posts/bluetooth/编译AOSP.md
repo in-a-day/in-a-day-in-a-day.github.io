@@ -4,11 +4,12 @@ description: 编译AOSP
 date: 2023-04-23
 tags:
   - 蓝牙
+  - AOSP
 ---
 
 ## 写在前面
 本文基于以下环境:  
-OS: Ubuntu 22.04, CPU: i7 8700, 内存: 16G  
+OS: Ubuntu 22.04, CPU: i7 8700, 内存: 32G
 
 ## 下载AOSP源码
 建立python软链接:
@@ -82,7 +83,6 @@ sudo apt-get install openjdk-8-jdk
 
 ### 设置交换文件
 如果你的机器内存大于16G可以跳过此步骤了.
-TODO
 
 ### 初始化环境
 ```bash
