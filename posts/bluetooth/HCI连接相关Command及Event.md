@@ -144,6 +144,30 @@ Inquiry Mode有以下几种：
 ## 远程信息
 这组命令和事件用于发现远程设备的信息.
 
+| 类型    | 名称                                         | 描述                       |
+| --      | --                                           | --                         |
+| Command | HCI_Remote_Name_Request                      | 读取远程设备的名称         |
+| Command | HCI_Remote_Name_Request_Cancel               | 取消读取远程设备名称       |
+| Event   | HCI_Remote_Name_Request_Complete             | 读取远程设备名称完成事件   |
+| Command | HCI_Read_Remote_Supported_Features           | 读取远程设备支持的特性     |
+| Event   | HCI_Read_Remote_Supported_Features_Complete  | 返回远程设备支持的特性     |
+| Command | HCI_Read_Remote_Extended_Features            | 读取远程设备支持的拓展特性 |
+| Event   | HCI_Read_Remote_Extended_Features_Complete   | 返回远程设备支持的拓展特性 |
+| Command | HCI_Read_Remote_Version_Information          | 读取远程设备版本信息       |
+| Event   | HCI_Read_Remote_Version_Information_Complete | 返回远程设备版本信息       |
+
+
+## 连接状态
+这组命令和事件用于链接配置，主要是支持低电量操作
+
+| 类型    | 名称            | 描述                                                         |
+| --      | --              | --                                                           |
+| Event   | HCI_Mode_Change | 表示mode改变，有三种mode: Active mode, Hold mode, Sniff mode |
+| Command | HCI_Hold_Mode   | 切换为Hold mode                                              |
+| Command | HCI_Sniff_Mode  | 切换为Sniff mode                                             |
+
+
+
 
 ## TODO
 - Inquiry_Scan_Type的normal和interlaced
