@@ -104,26 +104,26 @@ Inquiry Mode有以下几种：
 ## 连接建立
 这组命令和事件用于在设备间建立连接。
 
-| 类型    | 名称                                | 描述                                                                  |
-| ---     | ---                                 | ---                                                                   |
-| Command | HCI_Create_Connection               | 尝试创建与一个给定BR_ADDR的远程设备间的ACL连接                        |
-| Event   | HCI_Connection_Request              | 表示正在尝试建立新传入的BR/EDR连接                                    |
-| Command | HCI_Accept_Connection_Request       | 接受新传入的BR/EDR连接请求                                            |
-| Command | HCI_Reject_Connection_Request       | 拒绝新传入的BR/EDR连接请求                                            |
-| Command | HCI_Create_Connection_Cancel        | 请求取消正在进行的创建连接操作                                        |
-| Event   | HCI_Connection_Complete             | 表示已经建立了新的连接                                                |
-| Command | HCI_Disconnect                      | 终止已经存在的连接（BR/EDR或LE)                                       |
-| Event   | HCI_Disconnection_Complete          | 发生于一个连接已经终止时                                              |
-| Command | HCI_Read_Page_Timeout               | 读取Page_Timeout配置参数，该参数表示等待远程设备响应的最大时间        |
-| Command | HCI_Write_Page_Timeout              | 写入Page_Timeout配置参数                                              |
+| 类型    | 名称                                | 描述                                                                      |
+| ---     | ---                                 | ---                                                                       |
+| Command | HCI_Create_Connection               | 尝试创建与一个给定BR_ADDR的远程设备间的ACL连接                            |
+| Event   | HCI_Connection_Request              | 表示正在尝试建立新传入的BR/EDR连接                                        |
+| Command | HCI_Accept_Connection_Request       | 接受新传入的BR/EDR连接请求                                                |
+| Command | HCI_Reject_Connection_Request       | 拒绝新传入的BR/EDR连接请求                                                |
+| Command | HCI_Create_Connection_Cancel        | 请求取消正在进行的创建连接操作                                            |
+| Event   | HCI_Connection_Complete             | 表示已经建立了新的连接, 连接建立后将会返回一个Connection_Handle标识这个连接 |
+| Command | HCI_Disconnect                      | 终止已经存在的连接（BR/EDR或LE)                                           |
+| Event   | HCI_Disconnection_Complete          | 发生于一个连接已经终止时                                                  |
+| Command | HCI_Read_Page_Timeout               | 读取Page_Timeout配置参数，该参数表示等待远程设备响应的最大时间            |
+| Command | HCI_Write_Page_Timeout              | 写入Page_Timeout配置参数                                                  |
 | Command | HCI_Read_Page_Scan_Activity         | 读取Page_Scan_Interval和Page_Scan_Window参数
-| Command | HCI_Write_Page_Scan_Activity        | 设置Page_Scan_Interval和Page_Scan_Window参数                          |
-| Command | HCI_Read_Page_Scan_Type             | 读取Page Scan类型：normal或interlaced                                 |
-| Command | HCI_Write_Page_Scan_Type            | 设置Page Scan类型                                                     |
-| Command | HCI_Read_Connection_Accept_Timeout  | 读取Connection_Accept_Timeout配置参数                                 |
-| Command | HCI_Write_Connection_Accept_Timeout | 设置Connection_Accept_Timeout配置参数                                 |
-| Command | HCI_Read_Hold_Mode_Activity         | 读取Hold_Mode_Activity参数值, 该参数表示在Hold Mode下哪些活动需要挂起 |
-| Command | HCI_Write_Hold_Mode_Activity        | 设置Hold_Mode_Activity参数值                                          |
+| Command | HCI_Write_Page_Scan_Activity        | 设置Page_Scan_Interval和Page_Scan_Window参数                              |
+| Command | HCI_Read_Page_Scan_Type             | 读取Page Scan类型：normal或interlaced                                     |
+| Command | HCI_Write_Page_Scan_Type            | 设置Page Scan类型                                                         |
+| Command | HCI_Read_Connection_Accept_Timeout  | 读取Connection_Accept_Timeout配置参数                                     |
+| Command | HCI_Write_Connection_Accept_Timeout | 设置Connection_Accept_Timeout配置参数                                     |
+| Command | HCI_Read_Hold_Mode_Activity         | 读取Hold_Mode_Activity参数值, 该参数表示在Hold Mode下哪些活动需要挂起     |
+| Command | HCI_Write_Hold_Mode_Activity        | 设置Hold_Mode_Activity参数值                                              |
 
 ### Page Scan参数
 - Page_Scan_Interval: 两次连接扫描之间的间隔
@@ -160,11 +160,113 @@ Inquiry Mode有以下几种：
 ## 连接状态
 这组命令和事件用于链接配置，主要是支持低电量操作
 
-| 类型    | 名称            | 描述                                                         |
-| --      | --              | --                                                           |
-| Event   | HCI_Mode_Change | 表示mode改变，有三种mode: Active mode, Hold mode, Sniff mode |
-| Command | HCI_Hold_Mode   | 切换为Hold mode                                              |
-| Command | HCI_Sniff_Mode  | 切换为Sniff mode                                             |
+| 类型    | 名称                                  | 描述                                                         |
+| --      | --                                    | --                                                           |
+| Event   | HCI_Mode_Change                       | 表示mode改变，有三种mode: Active mode, Hold mode, Sniff mode |
+| Command | HCI_Hold_Mode                         | 切换为Hold mode                                              |
+| Command | HCI_Sniff_Mode                        | 切换为Sniff mode                                             |
+| Command | HCI_Sniff_Subrating                   | 为本地设备配置sniff子速率参数                                |
+| Event   | HCI_Sniff_Subrating                   | 通知host本地和远程的发送和接受延迟情况                       |
+| Command | HCI_Exit_Sniff_Mode                   | 退出Sniff mode                                               |
+| Command | HCI_Park_State                        | 改变Link manager行为, 使用本地或远程设备处于park状态         |
+| Command | HCI_Exit_Park_State                   | 退出park状态进入激活模式                                     |
+| Command | HCI_Read_Link_Policy_Settings         | 读取Link Policy设置参数                                      |
+| Command | HCI_Write_Link_Policy_Settings        | 设置Link Policy设置参数                                      |
+| Command | HCI_Read_Default_Link_Policy_Settings | 读取默认的Linck Policy设置参数                               |
+| Command | HCI_Write_Default_Link_Policy_Settings | 设置默认的Linck Policy设置参数                               |
+
+### HCI_Write_Link_Policy_Settings
+Link_Policy_Settings参数:
+- 0x0000 Disable All LM Modes.
+- 0x0001 Enable Role Switch.
+- 0x0002 Enable Hold Mode.
+- 0x0004 Enable Sniff Mode.
+- 0x0008 Enable Park State.
+- 0x0010 – 0x8000 Reserved for future use.
+
+
+## Piconet结构
+这组命令和事件用于查看和重新配置一个Piconet
+
+| 类型    | 名称               | 描述                                                    |
+| --      | --                 | --                                                      |
+| Command | HCI_Role_Discovery | 用于host确定设备在特定的Connection_Handle上所扮演的角色 |
+| Command | HCI_Switch_Role    | 切换连接角色                                            |
+| Event   | HCI_Role_Change    | 表示角色已经切换                                        |
+
+
+## PHYSICAL LINKS
+这组命令和事件用于配置physical link
+
+| 类型    | 名称                                 | 描述                                                                            |
+| --      | --                                   | --                                                                              |
+| Command | HCI_Read_Link_Supervision_Timeout    | 读取设备的Link Supervision Time配置参数的值. Controller使用该参数来确定链路丢失 |
+| Command | HCI_Write_Link_Supervision_Timeout   | 配置Link Supervision Time配置参数                                               |
+| Event   | HCI_Link_Supervision_Timeout_Changed | 表示Link Supervision Time改变                                                   |
+
+
+## Flow Control
+| 类型    | 名称                 | 描述                                                                               |
+| --      | --                   | --                                                                                 |
+| Command | HCI_Host_Buffer_Size | 用于host通知Controller HCI ACL和同步数据包的数据部分的最大值(从Controller发向host) |
+| Command | HCI_Set_Event_Mask   | 控制HCI应当为Host生成那些事件                                                      |
+| Command | HCI_Set_Event_Filter | 用于host指定不同的事件过滤器                                                       |
+
+
+
+## 认证和加密
+这组命令和事件用于设备间的认证以及连接加密.
+| 类型    | 名称                                | 描述                                                                                                                  |
+| --      | --                                  | --                                                                                                                    |
+| Command | HCI_Read_Authentication_Enable      | 读取Authentication_Enable参数                                                                                         |
+| Command | HCI_Write_Authentication_Enable     | 写入Authentication_Enable参数                                                                                         |
+| Event   | HCI_Link_Key_Request                | 表示与指定BD_ADDR的设备连接需要link key                                                                               |
+| Command | HCI_Link_Key_Request_Reply          | 用于回复Controller发起的Link Key请求事件,并指定Host存储的Link Key作为与其他由BD_ADDR指定的BR/EDR控制器连接的link key. |
+| Command | HCI_Link_Key_Request_Negative_Reply | 用于回复Controller发起的Link Key请求事件, 表示Host并没有存储对应设备的Link Key                                        |
+| Event   | HCI_PIN_Code_Request                | 表示需要pin code去创建一个新的link key |
+| Command  | HCI_PIN_Code_Request_Reply | 回复Pin Code请求事件, 并指定连接所用的pin code |
+| Command | HCI_PIN_Code_Request_Negative_Reply | 回复Pin Code请求事件, 表示无法为连接指定pin code |
+| Event | HCI_Link_Key_Notification | 表示为连接已经创建了一个新的link key |
+| Command | HCI_Authentication_Requested | 用于在两个关联设备之间建立认证 |
+| Event | HCI_Authentication_Complete | 表示指定连接的认证已经完成 |
+| Command | HCI_Set_Connection_Encryption | 用于开启和关闭link级加密 | 
+| Event | HCI_Encryption_Change | 表示加密模式已经改变 |
+| Command | HCI_Change_Connection_Link_Key | 用于强制连接的两个设备生成新的link key |
+| Event | HCI_Change_Connection_Link_Key_Complete | 表示已完成link key修改 |
+| Command | HCI_Read_PIN_Type | 读取Pin type配置 |
+| Event | HCI_Write_PIN_Type | 写入Pin type配置 |
+| Command | HCI_Read_Stored_Link_Key | 读取一个或多个存储在Controller的link key |
+| Event | HCI_Return_Link_Keys | 返回HCI_Read_Stored_Link_Key读取的link key |
+| Command | HCI_Write_Stored_Link_Key | 写入一个或多个link key到Controller |
+| Command | HCI_Delete_Stored_Link_Key | 删除一个或多个存在Controller的link key |
+| Command | HCI_IO_Capability_ Request_Reply | 回复Controller的IO Capability Request事件, 并指定当前Host的I/O能力 |
+| Event | HCI_IO_Capability_Request | 表示在simple pairing过程中需要Host的I/O能力 |
+| Event | HCI_IO_Capability_Response | 表示收到远程设备的I/O能力 |
+| Command | HCI_User_Confirmation_Request_Reply | 回复User Confirmation Request事件, 表示用户选择了 `"是"` |
+| Command |  HCI_User_Confirmation_Request_Negative_Reply | 回复User Confirmation Request事件, 表示用户选择了 `"否"` |
+| Event | HCI_User_Confirmation_Request | 表示用户需要确认数值的内容 |
+| Command | HCI_User_Passkey_Request_Reply | 回复User Passkey Request事件, 并携带用户输入的数值(passkey)用于SSP(Secure Simple Pairing) |
+| Command | HCI_User_Passkey_Request_Negative_Reply | 回复User Passkey Request事件, 表示主机端无法提供passkey |
+| Event | HCI_User_Passkey_Request | 表示passkey需要作为SSP的一部分 |
+| Event | HCI_User_Passkey_Notification | 向Host提供用于给用户展示的passkey |
+| Command | HCI_Read_Simple_Pairing_Mode | 读取Simple Pairing Mode参数 |
+| Command | HCI_Write_Simple_Pairing_Mode | 写入Simple Pairing Mode参数 |
+| Event | HCI_Keypress_Notification | 收到passkey通知后返回Host事件 |
+| Command | HCI_IO_Capability_Request_Negative_Reply | 用于在Host接收到HCI IO Capability Request事件后, 拒绝配对尝试 |
+| Command | HCI_Read_Encryption_Key_Size | 读取当前加密key的大小 |
+
+### Authentication_Enable参数
+控制本地设备在连接远程设备时是否需要进行身份认证(在Create_Connection命令或接受一个新来的ACL连接请求到Connection Complete event之间).
+
+- 0x00 Authentication not required.
+- 0x01 Authentication required for all connections.
+- 0x02-0xFF Reserved
+
+### Pin Type参数
+是否支持可变的pin码或是固定的pin码.
+
+- 0x00 Variable PIN.
+- 0x01 Fixed PIN.
 
 
 
