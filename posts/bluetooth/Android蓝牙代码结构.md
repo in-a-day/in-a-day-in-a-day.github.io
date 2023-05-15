@@ -1,6 +1,6 @@
 ---
-title: 安卓蓝牙代码结构
-description: 安卓蓝牙代码结构
+title: Android蓝牙代码结构
+description: Android蓝牙代码结构
 date: 2023-04-23
 tags:
   - 蓝牙

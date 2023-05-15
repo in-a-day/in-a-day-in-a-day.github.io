@@ -9,7 +9,7 @@ tags:
 
 ## 写在前面
 本文基于Bluetooth Core Specification 5.3。分类参考Bluetooth Core Specification 4.2。  
-命令和事件不是完整的, 只是列举了一些常用的。
+命令和事件不是完整的, 只是列举了一些常见的。
 
 ## 通用的Event
 | Event                | 描述                                                                                   |
@@ -18,7 +18,6 @@ tags:
 | HCI_Command_Status   | 用于表明根据Command_Opcode参数所描述的命令已经被接收，并且控制器正在执行此命令的任务。 |
 | HCI_Hardware_Error   | 用于表明硬件的一些类型失败.                                                            |
 
-------------------------------------------------
 
 ## 设备设置
 | Command   | 描述                                                                                                                                                                              |
@@ -38,7 +37,6 @@ tags:
 | HCI_LE_Read_Local_Supported_Features | 读取本地Controller支持的LE特性                       |
 | HCI_LE_Read_ Supported_States        | 读取本地LE Controller当前支持状态和角色组合.         |
 
-------------------------------------------------
 
 ## Controller配置
 这组命令和事件用于配置全局的配置参数.
@@ -62,7 +60,6 @@ tags:
     - 0x02: Inquiry Scan disabled. Page Scan enabled.
     - 0x03: Inquiry Scan enabled. Page Scan enabled.
 
-------------------------------------------------
 
 ## 设备发现
 这组commands和events允许设备发现周围的设备.
@@ -86,7 +83,7 @@ tags:
 
 
 ### Inquiry Scan相关参数
-- Inquiry_Scan_Interval表示两次查询扫描之间的间隔
+- Inquiry_Scan_Interval表示两次查询扫描之间的间隔(从此次scan开始到下一次scan开始之间的间隔)
 - Inquiry_Scan_Window表示一次查询扫描的时长
 
 所以Inquiry_Scan_Window的值不能超过Inquiry_Scan_Interval的值.
@@ -94,12 +91,12 @@ tags:
 
 ### HCI_Read_Inquiry_Mode
 - TODO: 各个mode的解释说明
+
 Inquiry Mode有以下几种：
 - 0x00: Standard Inquiry Result event format 标准的查询结果事件格式
 - 0x01: Inquiry Result format with RSSI
 - 0x02: Inquiry Result with RSSI format or Extended Inquiry Result format
 
-------------------------------------------------
 
 ## 连接建立
 这组命令和事件用于在设备间建立连接。
@@ -126,7 +123,7 @@ Inquiry Mode有以下几种：
 | Command | HCI_Write_Hold_Mode_Activity        | 设置Hold_Mode_Activity参数值                                              |
 
 ### Page Scan参数
-- Page_Scan_Interval: 两次连接扫描之间的间隔
+- Page_Scan_Interval: 两次连接扫描之间的间隔(从此次scan开始到下一次scan开始之间的间隔)
 - Page_Scan_Window: 一次连接扫描的时长
 
 ### Connection_Accept_Timeout参数
@@ -267,11 +264,3 @@ Link_Policy_Settings参数:
 
 - 0x00 Variable PIN.
 - 0x01 Fixed PIN.
-
-
-
-
-## TODO
-- Inquiry_Scan_Type的normal和interlaced
-
-

@@ -1,6 +1,6 @@
 ---
-title: 安卓获取HCI log
-description: 安卓获取
+title: Android获取HCI log
+description: 安卓获取HCI log
 date: 2023-04-20
 tags:
   - 蓝牙
