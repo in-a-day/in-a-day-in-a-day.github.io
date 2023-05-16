@@ -52,14 +52,6 @@ tags:
 | Command | HCI_Read_Extended_Inquiry_Response  | 读取BR/EDR Controller在查询(inquiry)响应期间发送的扩展查询(inquiry)响应数据包中的数据。                                               |
 | Command | HCI_Write_Extended_Inquiry_Response | 写入在查询(inquiry)响应期间发送的扩展查询(inquiry)响应数据包中的数据。                                                                |
 
-### HCI_Write_Scan_Enable
-- 参数
-  - Scan_Enable: 
-    - 0x00: No Scans enabled. Default.
-    - 0x01: Inquiry Scan enabled. Page Scan disabled.
-    - 0x02: Inquiry Scan disabled. Page Scan enabled.
-    - 0x03: Inquiry Scan enabled. Page Scan enabled.
-
 
 ## 设备发现
 这组commands和events允许设备发现周围的设备.
@@ -81,16 +73,6 @@ tags:
 | Command | HCI_Read_Inquiry_Mode           | 读取Inquiry Mode配置参数值                                                       |
 | Command | HCI_Write_Inquiry_Mode          | 写入Inquiry Mode配置参数值                                                       |
 
-
-### Inquiry Scan相关参数
-- Inquiry_Scan_Interval表示两次查询扫描之间的间隔(从此次scan开始到下一次scan开始之间的间隔)
-- Inquiry_Scan_Window表示一次查询扫描的时长
-
-所以Inquiry_Scan_Window的值不能超过Inquiry_Scan_Interval的值.
-- TODO: 具体的取值范围
-
-### HCI_Read_Inquiry_Mode
-- TODO: 各个mode的解释说明
 
 Inquiry Mode有以下几种：
 - 0x00: Standard Inquiry Result event format 标准的查询结果事件格式
@@ -264,3 +246,29 @@ Link_Policy_Settings参数:
 
 - 0x00 Variable PIN.
 - 0x01 Fixed PIN.
+
+
+## HCI配置参数
+### Scan_Enable
+控制BR/EDR Controller是否定期(period)扫描其他BR/EDR控制器发送的连接(page)尝试和/或查询(inquiry)请求.
+
+取值:
+- 0x00 No Scans enabled. Default.
+- 0x01 Inquiry Scan enabled. Page Scan disabled.
+- 0x02 Inquiry Scan disabled. Page Scan enabled.
+- 0x03 Inquiry Scan enabled. Page Scan enabled.
+
+### Inquiry_Scan_Interval
+定义连续两次查询扫描间的时间间隔. 从上一次查询扫描开始到下一次查询扫描开始之间的时间间隔.
+
+### Inquiry_Scan_Window
+定义一次查询扫描的持续时长. 所以Inquiry_Scan_Window不能超过Inquiry_Scan_Interval.
+
+### Inquiry_Scan_Type
+决定查询扫描是否使用interlaced查询扫描.  
+在标准的查询扫描下, 蓝牙设备仅发送查询扫描请求并等待其他设备的查询响应.  
+在interlaced查询扫描下, 蓝牙设备会在扫描查询响应和监听其他设备的查询请求间交替.  
+
+取值:
+- 0x00 Mandatory: Standard Scan (default)
+- 0x01 Optional: Interlaced Scan
