@@ -47,8 +47,8 @@ tags:
 | Command | HCI_Write_Local_Name                | 修改用户友好的设备名称.                                                                                                               |
 | Command | HCI_Read_Class_of_Device            | 读取设备类配置参数值, 值用于向其他设备表示本地设备的功能.                                                                             |
 | Command | HCI_Write_Class_of_Device           | 写入设备类配置参数值.                                                                                                                 |
-| Command | HCI_Read_Scan_Enable                | 读取Scan Enable配置参数值, 该参数控制BR/EDR Controller是否定期(period)扫描其他BR/EDR控制器发送的连接(page)尝试和/或查询(inquiry)请求. |
-| Command | HCI_Write_Scan_Enable               | 配置Scan Enable参数.                                                                                                                  |
+| Command | HCI_Read_Scan_Enable                | 读取Scan_Enable配置参数值, 该参数控制BR/EDR Controller是否定期(period)扫描其他BR/EDR控制器发送的连接(page)尝试和/或查询(inquiry)请求. |
+| Command | HCI_Write_Scan_Enable               | 配置Scan_Enable参数.                                                                                                                  |
 | Command | HCI_Read_Extended_Inquiry_Response  | 读取BR/EDR Controller在查询(inquiry)响应期间发送的扩展查询(inquiry)响应数据包中的数据。                                               |
 | Command | HCI_Write_Extended_Inquiry_Response | 写入在查询(inquiry)响应期间发送的扩展查询(inquiry)响应数据包中的数据。                                                                |
 
@@ -58,7 +58,7 @@ tags:
 
 | 类型    | 名称                            | 描述                                                                             |
 | --      | --                              | --                                                                               |
-| Command | HCI_Inquiry                     | 使本地设备进入Inquiry Mode, 用于查询周围的设备                                   |
+| Command | HCI_Inquiry                     | 使本地设备进入Inquiry模式, 用于查询周围的设备                                   |
 | Command | HCI_Inquiry_Cancel              | 取消查询, 通常Android设备在进行连接前会取消查询, 因为查询操作是一个比较耗时操作. |
 | Event   | HCI_Inquiry_Result              | 查询结果事件, 通常包含远程设备的地址, 设备类等                                   |
 | Event   | HCI_Extended_Inquiry_Result     | 拓展的查询结果                                                                   |
@@ -70,14 +70,8 @@ tags:
 | Command | HCI_Write_Inquiry_Scan_Activity | 设置Inquiry_Scan_Interval和Inquiry_Scan_Window配置参数值。                       |
 | Command | HCI_Read_Inquiry_Scan_Type      | 读取Inquiry_Scan_Type配置参数值，该值用于设置normal/interlaced扫描。             |
 | Command | HCI_Write_Inquiry_Scan_Type     | 设置Inquiry_Scan_Type配置参数值。                                                |
-| Command | HCI_Read_Inquiry_Mode           | 读取Inquiry Mode配置参数值                                                       |
-| Command | HCI_Write_Inquiry_Mode          | 写入Inquiry Mode配置参数值                                                       |
-
-
-Inquiry Mode有以下几种：
-- 0x00: Standard Inquiry Result event format 标准的查询结果事件格式
-- 0x01: Inquiry Result format with RSSI
-- 0x02: Inquiry Result with RSSI format or Extended Inquiry Result format
+| Command | HCI_Read_Inquiry_Mode           | 读取Inquiry_Mode配置参数值                                                       |
+| Command | HCI_Write_Inquiry_Mode          | 写入Inquiry_Mode配置参数值                                                       |
 
 
 ## 连接建立
@@ -104,13 +98,6 @@ Inquiry Mode有以下几种：
 | Command | HCI_Read_Hold_Mode_Activity         | 读取Hold_Mode_Activity参数值, 该参数表示在Hold Mode下哪些活动需要挂起     |
 | Command | HCI_Write_Hold_Mode_Activity        | 设置Hold_Mode_Activity参数值                                              |
 
-### Page Scan参数
-- Page_Scan_Interval: 两次连接扫描之间的间隔(从此次scan开始到下一次scan开始之间的间隔)
-- Page_Scan_Window: 一次连接扫描的时长
-
-### Connection_Accept_Timeout参数
-该参数允许Controller在经过指定的时间段后自动拒绝连接（如果新的连接未被接受）。
-时间是从BR/EDR控制器发送HCI_Connection_Request事件或LE控制器发送HCI_LE_CIS_Request事件起，直到控制器自动拒绝传入连接的持续时间。
 
 ### Hold_Mode_Activity参数
 - 0x00 Maintain current Power State.
@@ -259,16 +246,40 @@ Link_Policy_Settings参数:
 - 0x03 Inquiry Scan enabled. Page Scan enabled.
 
 ### Inquiry_Scan_Interval
-定义连续两次查询扫描间的时间间隔. 从上一次查询扫描开始到下一次查询扫描开始之间的时间间隔.
+定义连续查询扫描间的时间间隔. 从上一次查询扫描开始到下一次查询扫描开始之间的时间间隔.
 
 ### Inquiry_Scan_Window
 定义一次查询扫描的持续时长. 所以Inquiry_Scan_Window不能超过Inquiry_Scan_Interval.
 
 ### Inquiry_Scan_Type
-决定查询扫描是否使用interlaced查询扫描.  
+表示查询扫描是否使用interlaced查询扫描:
+- 0x00 Mandatory: Standard Scan (default)
+- 0x01 Optional: Interlaced Scan
+
 在标准的查询扫描下, 蓝牙设备仅发送查询扫描请求并等待其他设备的查询响应.  
 在interlaced查询扫描下, 蓝牙设备会在扫描查询响应和监听其他设备的查询请求间交替.  
 
-取值:
-- 0x00 Mandatory: Standard Scan (default)
-- 0x01 Optional: Interlaced Scan
+### Inquiry_Mode
+表示查询结果事件的返回数据格式. 有以下几种:
+- 0x00 Standard Inquiry Result event format
+  - 标准的查询结果事件格式
+  - 携带远程设备的一些基础信息: 蓝牙地址, 设备类
+- 0x01 Inquiry Result format with RSSI
+  - RSSI: Received Signal Strength Indication 接收信号强度指示
+  - 除了标准的信息外, 还携带远程设备的信号强度
+- 0x02 Inquiry Result with RSSI format or Extended Inquiry Result format
+  - 除了标准的信息外, 还携带一些额外的信息, 如: 设备名称, 支持的服务等
+
+### Page_Timeout, Extended_Page_Timeout
+Page_Timeout和Extended_Page_Timeout一起定义了本地Link Manager等待远程设备响应连接尝试(本地设备发起的连接尝试)的最长时间.
+如果超过改时间还未接收到响应, 那么此次连接尝试将被视为失败.
+
+### Connection_Accept_Timeout参数
+该参数允许Controller在经过指定的时间段后自动拒绝连接（如果新的连接未被接受）。
+时间是从BR/EDR控制器发送HCI_Connection_Request事件或LE控制器发送HCI_LE_CIS_Request事件起，直到控制器自动拒绝传入连接的持续时间。
+
+### Page_Scan_Interval
+定义连续连接扫描间的时间间隔. 从上一次连接扫描开始到下一次连接扫描开始之间的时间间隔.
+
+### Page_Scan_Window
+定义一次连接扫描的持续时长. 所以Page_Scan_Window不能超过Page_Scan_Interval.
