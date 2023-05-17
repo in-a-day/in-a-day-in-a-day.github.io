@@ -99,12 +99,6 @@ tags:
 | Command | HCI_Write_Hold_Mode_Activity        | 设置Hold_Mode_Activity参数值                                              |
 
 
-### Hold_Mode_Activity参数
-- 0x00 Maintain current Power State.
-- 0x01 Suspend Page Scan.
-- 0x02 Suspend Inquiry Scan.
-- 0x04 Suspend Periodic Inquiries.
-- 0x08-0xFF Reserved for future use.
 
 
 ## 远程信息
@@ -140,15 +134,6 @@ tags:
 | Command | HCI_Write_Link_Policy_Settings        | 设置Link Policy设置参数                                      |
 | Command | HCI_Read_Default_Link_Policy_Settings | 读取默认的Linck Policy设置参数                               |
 | Command | HCI_Write_Default_Link_Policy_Settings | 设置默认的Linck Policy设置参数                               |
-
-### HCI_Write_Link_Policy_Settings
-Link_Policy_Settings参数:
-- 0x0000 Disable All LM Modes.
-- 0x0001 Enable Role Switch.
-- 0x0002 Enable Hold Mode.
-- 0x0004 Enable Sniff Mode.
-- 0x0008 Enable Park State.
-- 0x0010 – 0x8000 Reserved for future use.
 
 
 ## Piconet结构
@@ -221,18 +206,6 @@ Link_Policy_Settings参数:
 | Command | HCI_IO_Capability_Request_Negative_Reply | 用于在Host接收到HCI IO Capability Request事件后, 拒绝配对尝试 |
 | Command | HCI_Read_Encryption_Key_Size | 读取当前加密key的大小 |
 
-### Authentication_Enable参数
-控制本地设备在连接远程设备时是否需要进行身份认证(在Create_Connection命令或接受一个新来的ACL连接请求到Connection Complete event之间).
-
-- 0x00 Authentication not required.
-- 0x01 Authentication required for all connections.
-- 0x02-0xFF Reserved
-
-### Pin Type参数
-是否支持可变的pin码或是固定的pin码.
-
-- 0x00 Variable PIN.
-- 0x01 Fixed PIN.
 
 
 ## HCI配置参数
@@ -283,3 +256,56 @@ Page_Timeout和Extended_Page_Timeout一起定义了本地Link Manager等待远�
 
 ### Page_Scan_Window
 定义一次连接扫描的持续时长. 所以Page_Scan_Window不能超过Page_Scan_Interval.
+
+### Page_Scan_Type
+表示连接扫描是否使用interlaced扫描:
+- 0x00 Mandatory: Standard Scan (default)
+- 0x01 Optional: Interlaced Scan
+
+### PIN_Type
+PIN: Personal Identification Number
+决定了Link Manager是否假设主机支持可变的PIN码或固定的PIN码. 在配对过程中, Controller会使用PIN_Type的信息.
+
+取值:
+- 0x00 Variable PIN.
+- 0x01 Fixed PIN.
+
+### Link key
+Controller可以为其他BR/EDR Controller存储有限数量的Link key, Link key用于两个Controller之间的所有安全事务.
+Link key与设备的BR_ADDR相关联.
+
+### Authentication_Enable
+控制本地设备在建立连接时(在HCI_Create_Connection或接受传入的ACL连接和Connection Complete event之间)是否需要对远程设备进行身份认证.
+在连接建立时，只有启用了Authentication_Enable参数的设备才会尝试对其他设备进行身份验证.
+
+- 0x00 Authentication not required.
+- 0x01 Authentication required for all connections.
+- 0x02-0xFF Reserved
+
+### Hold_Mode_Activity
+用于确定在BR/EDR控制器处于保持模式时应暂停哪些活动.
+
+- 0x00 Maintain current Power State.
+- 0x01 Suspend Page Scan.
+- 0x02 Suspend Inquiry Scan.
+- 0x04 Suspend Periodic Inquiries.
+- 0x08-0xFF Reserved for future use.
+
+### Link_Policy_Settings
+Link_Policy_Settings参数决定本地Link Manager在收到来自远程Link Manager的请求或者自身确定要改变角色,进入Hold或Sniff模式时的行为.
+
+- 0x0000 Disable All LM Modes.
+- 0x0001 Enable Role Switch.
+- 0x0002 Enable Hold Mode.
+- 0x0004 Enable Sniff Mode.
+- 0x0008 Enable Park State.
+- 0x0010 – 0x8000 Reserved for future use.
+
+### Link_Supervision_Timeout
+用于Controller监视链路丢失情况.如果由于任何原因,Connection_Handle未接收到数据包的持续时间超过Link_Supervision_Timeout设定的时间,连接将会断开.
+
+### Class_Of_Device
+用于向其他设备表明本地设备具有的能力.
+
+### Supported_Commands
+列举本地Controller支持的HCI命令.
