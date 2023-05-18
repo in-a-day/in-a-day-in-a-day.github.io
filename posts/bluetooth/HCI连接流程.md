@@ -11,11 +11,13 @@ tags:
 本文简单描述从HCI_Reset到完成ACL连接的流程.
 
 ## 流程
+### 重置蓝牙
 一切从HCI_Reset开始:
 ![](https://cdn.jsdelivr.net/gh/zabbits/cdn@main/picgo/202305172350283.png)
 
-安卓设备重启蓝牙调用该命令.
+Android设备重启蓝牙调用该命令.
 
+### 读取写入配置信息
 读取版本信息:
 ![image.png](https://cdn.jsdelivr.net/gh/zabbits/cdn@main/picgo/20230517235520.png)
 
@@ -71,6 +73,7 @@ tags:
 启用查询扫描和连接扫描:
 ![image.png](https://cdn.jsdelivr.net/gh/zabbits/cdn@main/picgo/20230518001638.png)
 
+### 开启扫描
 开启查询扫描:
 ![image.png](https://cdn.jsdelivr.net/gh/zabbits/cdn@main/picgo/20230518001714.png)
 
@@ -91,6 +94,7 @@ HCI_Command_Status表示这个命令成功执行.
 远程设备响应获取名称:
 ![image.png](https://cdn.jsdelivr.net/gh/zabbits/cdn@main/picgo/20230518002428.png)
 
+### 创建连接
 接下来开始创建连接:
 ![image.png](https://cdn.jsdelivr.net/gh/zabbits/cdn@main/picgo/20230518002605.png)
 
@@ -100,6 +104,7 @@ HCI_Command_Status表示这个命令成功执行.
 读取远程设备的版本信息:
 ![image.png](https://cdn.jsdelivr.net/gh/zabbits/cdn@main/picgo/20230518002940.png)
 
+### 请求认证
 发起认证请求:
 ![image.png](https://cdn.jsdelivr.net/gh/zabbits/cdn@main/picgo/20230518003008.png)
 
@@ -128,3 +133,25 @@ TODO: 具体的IO能力分类
 
 远程设备响应了支持的特性:
 ![image.png](https://cdn.jsdelivr.net/gh/zabbits/cdn@main/picgo/20230518003953.png)
+
+发起用户确认请求事件, 携带了数值, Host应该返回HCI_User_Confirmation_Request_Reply或者 HCI_User_Confirmation_Request_Negative_Reply. 如果Host具有输出能力, 应该展示这个数值(DisplayYesNo or KeyboardOnly), 如果Host没有输入输出能力, 那么应该直接返回 HCI_User_Confirmation_Request_Reply:
+![image.png](https://cdn.jsdelivr.net/gh/zabbits/cdn@main/picgo/20230518222143.png)
+
+用户确认请求, host返回请求确认(我用Android设备连接Airpods pro, 并没有显示数字, 耳机没有输入输出, 手机端显示数字也没什么意义):
+![image.png](https://cdn.jsdelivr.net/gh/zabbits/cdn@main/picgo/20230518222514.png)
+
+完成配对:
+![image.png](https://cdn.jsdelivr.net/gh/zabbits/cdn@main/picgo/20230518231642.png)
+
+通知为这个连接生成了新的link key:
+![image.png](https://cdn.jsdelivr.net/gh/zabbits/cdn@main/picgo/20230518231726.png)
+
+最终完成认证:
+![image.png](https://cdn.jsdelivr.net/gh/zabbits/cdn@main/picgo/20230518231757.png)
+
+开启加密连接:
+![image.png](https://cdn.jsdelivr.net/gh/zabbits/cdn@main/picgo/20230518232009.png)
+
+### 断开连接
+最后本地主动断开连接:
+![image.png](https://cdn.jsdelivr.net/gh/zabbits/cdn@main/picgo/20230518232147.png)
