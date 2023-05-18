@@ -32,10 +32,13 @@ Android设备重启蓝牙调用该命令.
 
 有关于Simple Pairing Mode主要有以下特性:
 - Just Works
+	- 使用这个方法在配对过程中不需要任何的用户交互, 通常耳机使用
 - Numeric Comparison
+	- 使用这种方法, 设备会显示数字代码或者秘钥, 用户需要在两台设备上确认来完成配对
 - Out of Band (OOB) Pairing
+	- 使用这种方法, 利用out-of-band(如NFC), 安全地交换配对信息
 - Passkey Entry
-- TODO具体描述这些特性
+	- 使用这种方式, 用户输入passkey或者pin进行身份认证
 
 设置Host支持的事件:
 ![image.png](https://cdn.jsdelivr.net/gh/zabbits/cdn@main/picgo/20230518000611.png)
@@ -120,7 +123,29 @@ Controller请求link key(携带远程设备的BR_ADDR):
 回复当前设备的IO能力:
 ![image.png](https://cdn.jsdelivr.net/gh/zabbits/cdn@main/picgo/20230518003457.png)
 
-TODO: 具体的IO能力分类
+#### 有关IO能力
+IO能力用于确定配对过程中使用的身份验证方法. 由设备的输入输出能力组合而成.
+
+输入能力:
+- No input: 设备没有能力表示`是`或`否`
+- Yes/No: 设备至少有两个按钮可以表示`是`或`否`, 或者有其他机制让用户表示`是`或`否`(例如在指定时间内按下按钮表示`是`, 否则表示`否`)
+- Keybord: 设备需要有数字键盘可以输入0-9和确认, 并且至少有两个按钮可以表示`是`或`否`(或者其他机制让用户表示`是`或`否`)
+
+输出能力:
+- No output: 设备没有能力显示或传递6位十进制数
+- Numeric output:  设备有能力显示或传递6位十进制数
+
+根据输入和输出能力组合可以得到IO能力:
+- NoInputNoOutput: No input + No output 或 Yes/No + No output
+	- 设备在配对过程中既不能显示也不能输入
+- DisplayOnly: No input + Numeric output
+	- 设备在配对过程中只能显示数值
+- DisplayYesNo: Yes/No + Numeric output
+	- 设备在配对过程中可以显示数值, 也允许用户确认或拒绝显示的值
+- KeyboardOnly: Keybord + No output
+	- 设备只有输入能力
+- KeyboardDisplay: Keybord + Numeric output
+	- 设备即可输入也有输出, 配对过程中用户可以输入数值进行认证
 
 终于接收到了读取远程设备的版本信息, 可以看到协议栈是5.0:
 ![image.png](https://cdn.jsdelivr.net/gh/zabbits/cdn@main/picgo/20230518003618.png)
