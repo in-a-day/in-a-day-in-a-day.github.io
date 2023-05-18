@@ -21,6 +21,7 @@
     "vitepress": "1.0.0-alpha.65"
   },
   "dependencies": {
+    "medium-zoom": "1.0.8",
     "dayjs": "^1.11.7"
   }
 }
