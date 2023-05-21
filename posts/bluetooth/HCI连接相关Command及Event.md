@@ -210,7 +210,7 @@ tags:
 
 ## HCI配置参数
 ### Scan_Enable
-控制BR/EDR Controller是否定期(period)扫描其他BR/EDR控制器发送的连接(page)尝试和/或查询(inquiry)请求.
+控制BR/EDR Controller是否定期(period)扫描其他BR/EDR控制器发送的连接(page)尝试和/或查询(inquiry)请求.  即设备是否可被查询扫描到或者连接扫描到.
 
 取值:
 - 0x00 No Scans enabled. Default.

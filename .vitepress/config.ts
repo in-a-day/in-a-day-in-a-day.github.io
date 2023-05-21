@@ -67,7 +67,7 @@ async function config() {
         },
         {
           text: "🔥RSS",
-          link: "https://dszdsxc.com/feed.xml",
+          link: "https://zabbits.com/feed.xml",
         },
       ],
       socialLinks: [

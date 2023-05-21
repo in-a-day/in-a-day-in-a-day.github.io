@@ -30,15 +30,15 @@ Android设备重启蓝牙调用该命令.
 开启简单配对模式:
 ![image.png](https://cdn.jsdelivr.net/gh/zabbits/cdn@main/picgo/20230518000315.png)
 
-有关于Simple Pairing Mode主要有以下特性:
+有关于Simple Pairing Mode主要有以下关联模型:
 - Just Works
-	- 使用这个方法在配对过程中不需要任何的用户交互, 通常耳机使用
+	- 当两个设备中至少有一个设备即没有显示能力也没有输入能力(即至少一个设备的IO能力是NoInputNoOutput), 使用这个模型, 在配对过程中不需要任何的用户交互(但也是可能会有交互的, 主要还是看上层应用如何实现, 比如在连接前需要用户确认连接). 常见的应用场景就是手机和耳机的连接(手机端可能会提示用户确认连接).
 - Numeric Comparison
-	- 使用这种方法, 设备会显示数字代码或者秘钥, 用户需要在两台设备上确认来完成配对
+	- 当两个设备都可以显示6位数字且用户可以输入`是`或`否`时(即IO能力都是`DisplayYesNo`), 使用这种模型, 设备会显示数字代码或者秘钥, 用户需要在两台设备上确认来完成配对. 常见的应用场景就是手机和电脑连接.
 - Out of Band (OOB) Pairing
-	- 使用这种方法, 利用out-of-band(如NFC), 安全地交换配对信息
+	- 使用这种模型, 利用out-of-band(如NFC), 安全地交换配对信息
 - Passkey Entry
-	- 使用这种方式, 用户输入passkey或者pin进行身份认证
+	- 两个设备中有一个设备有输入能力但是没有显示能力, 另一个设备有显示能力(即一个设备IO能力为KeybordOnly, 另一个设备至少有Display能力), 此时使用这种模型, 拥有输入能力的设备需要用户输入另一个设备所显示的passkey. 常见的应用场景是电脑连接键盘.
 
 设置Host支持的事件:
 ![image.png](https://cdn.jsdelivr.net/gh/zabbits/cdn@main/picgo/20230518000611.png)
@@ -73,7 +73,7 @@ Android设备重启蓝牙调用该命令.
 配置连接扫描的interval和window大小:
 ![image.png](https://cdn.jsdelivr.net/gh/zabbits/cdn@main/picgo/20230518001537.png)
 
-启用查询扫描和连接扫描:
+设置当前设备的状态为可查询可连接:
 ![image.png](https://cdn.jsdelivr.net/gh/zabbits/cdn@main/picgo/20230518001638.png)
 
 ### 开启扫描
@@ -162,7 +162,7 @@ IO能力用于确定配对过程中使用的身份验证方法. 由设备的输�
 发起用户确认请求事件, 携带了数值, Host应该返回HCI_User_Confirmation_Request_Reply或者 HCI_User_Confirmation_Request_Negative_Reply. 如果Host具有输出能力, 应该展示这个数值(DisplayYesNo or KeyboardOnly), 如果Host没有输入输出能力, 那么应该直接返回 HCI_User_Confirmation_Request_Reply:
 ![image.png](https://cdn.jsdelivr.net/gh/zabbits/cdn@main/picgo/20230518222143.png)
 
-用户确认请求, host返回请求确认(我用Android设备连接Airpods pro, 并没有显示数字, 耳机没有输入输出, 手机端显示数字也没什么意义):
+用户确认请求, host返回请求确认(我用Android设备连接Airpods pro, 并没有显示数字, 耳机没有输入输出能力, 手机端显示数字也没什么意义):
 ![image.png](https://cdn.jsdelivr.net/gh/zabbits/cdn@main/picgo/20230518222514.png)
 
 完成配对:
