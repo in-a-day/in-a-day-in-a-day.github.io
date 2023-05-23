@@ -31,6 +31,18 @@ SDP发起L2CAP连接, 完成连接返回目标CID:
 PnPInfo主要是设备厂商, 版本等信息:
 ![image.png](https://cdn.jsdelivr.net/gh/zabbits/cdn@main/picgo/20230523003146.png)
 
+## SDP查询所有profile
+![image.png](https://cdn.jsdelivr.net/gh/zabbits/cdn@main/picgo/20230523232523.png)
+
+返回参数携带Continuation, 表示数据太大, 需要分次传输:
+![image.png](https://cdn.jsdelivr.net/gh/zabbits/cdn@main/picgo/20230523232559.png)
+
+接下来携带Continuation参数继续查询:
+![image.png](https://cdn.jsdelivr.net/gh/zabbits/cdn@main/picgo/20230523232808.png)
+
+最终查询完毕:
+![image.png](https://cdn.jsdelivr.net/gh/zabbits/cdn@main/picgo/20230523232909.png)
+
 
 ## 关于如何确定SDP是本地设备发起还是远程设备发起:
 如果连接时两个设备的Role, 直接从Role就可看出(在此次连接中, 我的本地设备角色是Central):
