@@ -1,6 +1,6 @@
 ---
-title: A2DP,AVDTP和AVRCP
-description: A2DP,AVDTP和AVRCP
+title: A2DP和AVDTP
+description: A2DP和AVDTP
 date: 2023-05-23
 tags:
   - bluetooth
@@ -25,11 +25,14 @@ A2DP分为两个角色:
 音频/视频分发传输协议: Audio/Video Distribution Transport Protocol.
 用于传输音频视频流.
 
+## AVRCP
+音视频远程控制协议: Audio/Video Remote Control Profile. 用于控制
+
 ## btsnoop中的A2DP和AVDTP
 本地设备SDP查询远程设备Sink服务信息:
 ![image.png](https://cdn.jsdelivr.net/gh/zabbits/cdn@main/picgo/20230524001919.png)
 
-AVDTP发起L2CAP连接, 用于控制传输AVDTP本身信息:
+L2CAP发起AVDTP连接, 用于控制传输AVDTP本身信息:
 ![image.png](https://cdn.jsdelivr.net/gh/zabbits/cdn@main/picgo/20230524002055.png)
 
 L2CAP连接完成:
@@ -38,7 +41,7 @@ L2CAP连接完成:
 AVDTP请求发现远程设备信息, 查找远程设备可用的音视频服务:
 ![image.png](https://cdn.jsdelivr.net/gh/zabbits/cdn@main/picgo/20230524002305.png)
 
-远程设备返回可用信息(ACP（Audio Control Protocol）Stream Endpoint):
+远程设备返回可用信息(ACP(Acceptor) Stream Endpoint):
 ![image.png](https://cdn.jsdelivr.net/gh/zabbits/cdn@main/picgo/20230524002610.png)
 
 根据ACP Stream Endpoint ID查询具体的信息:
@@ -53,5 +56,6 @@ AVDTP请求发现远程设备信息, 查找远程设备可用的音视频服务:
 AVDTP_OPEN开启音频数据流传输:
 ![image.png](https://cdn.jsdelivr.net/gh/zabbits/cdn@main/picgo/20230524004316.png)
 
-远程设备响应开启后, 本地设备创建一条L2CAP连接用于音频数据传输:
+远程设备响应开启后, 本地设备L2CAP创建一个新的L2CAP连接用于音频数据传输:
 ![image.png](https://cdn.jsdelivr.net/gh/zabbits/cdn@main/picgo/20230524004452.png)
+
