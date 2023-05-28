@@ -46,3 +46,28 @@ AVCTP分为两个部分:
 
 ## TODO
 - AVRCP的categories
+
+## AVRCP中的交互
+
+### Event Id
+
+CT端获取TG端支持的event:
+![image.png](https://cdn.jsdelivr.net/gh/zabbits/cdn@main/picgo/20230528233407.png)
+
+### Event Id
+- EVENT_PLAYBACK_STATUS_CHANGED (0x01) 更改当前歌曲播放状态
+track.
+- EVENT_TRACK_CHANGED (0x02) 更改当前歌曲
+- EVENT_TRACK_REACHED_END (0x03) 到达歌曲结尾
+- EVENT_TRACK_REACHED_START (0x04) 到达歌曲开始
+- EVENT_PLAYBACK_POS_CHANGED (0x05) 播放位置改变
+- EVENT_BATT_STATUS_CHANGED (0x06) 电池状态改变
+- EVENT_SYSTEM_STATUS_CHANGED (0x07) 系统状态改变
+- EVENT_PLAYER_APPLICATION_SETTING_CHANGED (0x08) 播放器应用改变
+- EVENT_NOW_PLAYING_CONTENT_CHANGED (0x09) 当前播放列表内容改变
+- EVENT_AVAILABLE_PLAYERS_CHANGED (0x0a) 可用播放器改变
+- EVENT_ADDRESSED_PLAYER_CHANGED (0x0b) 选中的播放器改变
+  - 如从一个播放器切换到另一个播放器
+- EVENT_UIDS_CHANGED (0x0c) UIDs(Unique Identifiers)改变
+- EVENT_VOLUME_CHANGED (0x0d) TG端本地音量改变
+- 0x0e-0xFF Reserved for future use
