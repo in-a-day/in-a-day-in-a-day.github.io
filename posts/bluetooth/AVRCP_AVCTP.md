@@ -1,6 +1,6 @@
 ---
-title: AVRCP和AVDTP
-description: AVRCP和AVDTP
+title: AVRCP和AVCTP
+description: AVRCP和AVCTP
 date: 2023-05-24
 tags:
   - bluetooth
@@ -44,17 +44,29 @@ AVCTP分为两个部分:
 接下来L2CAP建立AVCTP连接:
 ![image.png](https://cdn.jsdelivr.net/gh/zabbits/cdn@main/picgo/20230525004036.png)
 
-## TODO
-- AVRCP的categories
 
 ## AVRCP中的交互
 
-### Event Id
+首先手机端做CT向耳机注册`EVENT VOLUME CHANGED` 事件:
+![image.png](https://cdn.jsdelivr.net/gh/zabbits/cdn@main/picgo/20230529233900.png)
 
-CT端获取TG端支持的event:
+耳机回复当前音量:
+![image.png](https://cdn.jsdelivr.net/gh/zabbits/cdn@main/picgo/20230529233957.png)
+
+手机端调整音量设置绝对音量:
+![image.png](https://cdn.jsdelivr.net/gh/zabbits/cdn@main/picgo/20230529234054.png)
+
+耳机端回复绝对音量设置:
+![image.png](https://cdn.jsdelivr.net/gh/zabbits/cdn@main/picgo/20230529234134.png)
+
+### TODO关于绝对音量
+同步手机端与耳机端的音量.
+
+
+CT端(耳机)获取TG端(手机)支持的event:
 ![image.png](https://cdn.jsdelivr.net/gh/zabbits/cdn@main/picgo/20230528233407.png)
 
-### Event Id
+### 关于Event Id
 - EVENT_PLAYBACK_STATUS_CHANGED (0x01) 更改当前歌曲播放状态
 track.
 - EVENT_TRACK_CHANGED (0x02) 更改当前歌曲

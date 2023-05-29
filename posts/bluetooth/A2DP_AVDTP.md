@@ -25,9 +25,6 @@ A2DP分为两个角色:
 音频/视频分发传输协议: Audio/Video Distribution Transport Protocol.
 用于传输音频视频流.
 
-## AVRCP
-音视频远程控制协议: Audio/Video Remote Control Profile. 用于控制
-
 ## btsnoop中的A2DP和AVDTP
 本地设备SDP查询远程设备Sink服务信息:
 ![image.png](https://cdn.jsdelivr.net/gh/zabbits/cdn@main/picgo/20230524001919.png)
