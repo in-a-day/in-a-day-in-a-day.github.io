@@ -29,7 +29,7 @@ AVCTP分为两个部分:
 - **AVCTP Browse**: 用于浏览音频/视频内容的功能.
 
 ## btsnoop中的AVRCP和AVCTP
-远程设备(耳机)发起SDP, 询问当前设备是否支持AVRCP Target?:
+远程设备(耳机)发起SDP, 询问当前设备AVRCP Target服务:
 ![image.png](https://cdn.jsdelivr.net/gh/zabbits/cdn@main/picgo/20230525003301.png)
 
 手机端响应:
@@ -59,17 +59,22 @@ AVCTP分为两个部分:
 耳机端回复绝对音量设置:
 ![image.png](https://cdn.jsdelivr.net/gh/zabbits/cdn@main/picgo/20230529234134.png)
 
-### TODO关于绝对音量
-同步手机端与耳机端的音量.
+### 关于绝对音量
+- 传统的音量: 调整音量是调整TG端生成的音源,  CT端无法调整自己的音量.
+- 绝对音量: CT端可以调整自己的音量, CT与TG可以同步音量信息.
 
 
 CT端(耳机)获取TG端(手机)支持的event:
 ![image.png](https://cdn.jsdelivr.net/gh/zabbits/cdn@main/picgo/20230528233407.png)
 
+手机端回复支持的事件:
+![image.png](https://cdn.jsdelivr.net/gh/zabbits/cdn@main/picgo/20230530221054.png)
+
+
 ### 关于Event Id
-- EVENT_PLAYBACK_STATUS_CHANGED (0x01) 更改当前歌曲播放状态
+- EVENT_PLAYBACK_STATUS_CHANGED (0x01) 当前歌曲播放状态改变
 track.
-- EVENT_TRACK_CHANGED (0x02) 更改当前歌曲
+- EVENT_TRACK_CHANGED (0x02) 当前歌曲改变
 - EVENT_TRACK_REACHED_END (0x03) 到达歌曲结尾
 - EVENT_TRACK_REACHED_START (0x04) 到达歌曲开始
 - EVENT_PLAYBACK_POS_CHANGED (0x05) 播放位置改变
@@ -83,3 +88,48 @@ track.
 - EVENT_UIDS_CHANGED (0x0c) UIDs(Unique Identifiers)改变
 - EVENT_VOLUME_CHANGED (0x0d) TG端本地音量改变
 - 0x0e-0xFF Reserved for future use
+
+CT端注册监听播放状态改变事件:
+![image.png](https://cdn.jsdelivr.net/gh/zabbits/cdn@main/picgo/20230530221306.png)
+
+TG回复当前状态(中间态, 当状态改变时, TG还需要继续做出回复):
+![image.png](https://cdn.jsdelivr.net/gh/zabbits/cdn@main/picgo/20230530221341.png)
+
+最终TG播放状态改变通知CT:
+![image.png](https://cdn.jsdelivr.net/gh/zabbits/cdn@main/picgo/20230530221523.png)
+
+### 有关CT, TG事件交互
+通常分为三个步骤:
+1. CT端发送注册监听事件到TG, 对应的ctype为NOTIFY
+2. TG接收到CT的监听命令, 回复中间态,对应的Response为INTERIM
+3. TG端发生了CT端监听的事件, CT进行通知TG, 对应的Response为CHANGED
+
+接下来CT端发送用户按下暂停命令:
+![image.png](https://cdn.jsdelivr.net/gh/zabbits/cdn@main/picgo/20230530222333.png)
+
+TG响应收到命令:
+![image.png](https://cdn.jsdelivr.net/gh/zabbits/cdn@main/picgo/20230530222357.png)
+
+CT发送用户松开按钮:
+![image.png](https://cdn.jsdelivr.net/gh/zabbits/cdn@main/picgo/20230530222420.png)
+
+TG响应收到:
+![image.png](https://cdn.jsdelivr.net/gh/zabbits/cdn@main/picgo/20230530222435.png)
+
+### 有关按钮命令
+Operation code类型是: `PASS THROUGH` , Operation Id携带具体的操作类型: 如播放(play), 暂停(pause)等.  
+用户一次点击分为两步:
+- 按下(push)
+- 松开(release)
+
+每一步CT都会发送相应的命令, TG则响应命令
+
+
+接下来CT发送播放命令(这里用户按下了两次, 第一次应用没有处理, 状态还是播放状态):
+![image.png](https://cdn.jsdelivr.net/gh/zabbits/cdn@main/picgo/20230530223522.png)
+
+下一曲:
+![image.png](https://cdn.jsdelivr.net/gh/zabbits/cdn@main/picgo/20230530223628.png)
+
+上一曲:
+![image.png](https://cdn.jsdelivr.net/gh/zabbits/cdn@main/picgo/20230530223654.png)
