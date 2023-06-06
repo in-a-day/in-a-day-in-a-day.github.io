@@ -28,16 +28,28 @@ HFP有两个角色:
 
 ## Service Level Connection Establishment 
 在完成RFCOMM链路连接后, 进行初始化`Service Level Connection`:
-1. 在完成RFCOMM链路连接后, HFP进行初始化过程, 首先HF向AG发送AT指令(`AT+BRSF`)检索AG的特性, 并携带自己支持的特性(TODO 特性解释):
+1. 在完成RFCOMM链路连接后, HFP进行初始化过程, 首先HF向AG发送AT指令(`AT+BRSF`)检索AG的特性, 并携带自己支持的特性:
 ![image.png](https://cdn.jsdelivr.net/gh/zabbits/cdn@main/picgo/20230605225211.png)
-
-2. AG回复`+BRSF`告知HF其支持的特性:
+  AG回复`+BRSF`告知HF其支持的特性:
 ![image.png](https://cdn.jsdelivr.net/gh/zabbits/cdn@main/picgo/20230605230318.png)
-
-3. 如果HF和AG都支持`Codec negotiation`, 那么HF端发送`AT+BAC` 告知AG其支持的编解码器(TODO codec类别):
+ ### AG和HF的特性解释(TODO 补充完整)
+- `Call waiting or 3-way calling`: 呼叫等待或三方通话
+	-  呼叫等待: 允许用户在通话时接收另一个来电
+	-  三方通话: 允许用户同时和其他两个用户进行通话.
+- `EC and/or NR function`: 回声消除和/或噪声抑制
+	- EC(Echo Cancellation): 减小或消除音频信号中的回声.
+	- NR(Noise Reduction): 减小音频信号中的背景噪声(如车辆噪声, 风声等).
+	- HF通过发送`AT+NREC=0`关闭这些功能, 发送`AT+NREC=1`开启(NREC: Noise Reduction and Echo Cancelling).
+- `CLI presentation capability`: 来电显示
+	- HF通过发送`AT+CLIP=0`禁用, `AT+CLIP=1`启用.
+	- AG可以通过发送`+CLIP`携带来电信息给HF.
+- Voice Recognition Activation: 语音识别功能, 如果激活, HF可以通过语音命令控制AG
+	- HF发送`AT+BVRA=0`禁用, `AT+BVRA=1`激活.
+	- AG发送`+BVRA`报告激活状态
+1. 如果HF和AG都支持`Codec negotiation`, 那么HF端发送`AT+BAC` 告知AG其支持的编解码器(TODO codec类别):
 ![image.png](https://cdn.jsdelivr.net/gh/zabbits/cdn@main/picgo/20230605231014.png)
 
-4. HF发送`AT+CIND`获取`AG Indicators`(AG Indicators: 表示AG设备的一些特定状态或功能, 如电池电量、信号强度、通话状态):
+3. HF发送`AT+CIND`获取`AG Indicators`(AG Indicators: 表示AG设备的一些特定状态或功能, 如电池电量、信号强度、通话状态):
 ![image.png](https://cdn.jsdelivr.net/gh/zabbits/cdn@main/picgo/20230605231702.png)
   AG发送`+CIND`返回支持的Indicators(TODO Indicators解释):
   ![image.png](https://cdn.jsdelivr.net/gh/zabbits/cdn@main/picgo/20230605231843.png)
@@ -51,7 +63,8 @@ HFP有两个角色:
   ![image.png](https://cdn.jsdelivr.net/gh/zabbits/cdn@main/picgo/20230605234112.png)
   AG发送`+CHLD`返回相应的信息:
   ![image.png](https://cdn.jsdelivr.net/gh/zabbits/cdn@main/picgo/20230605234152.png)
-  如果HF支持`HF Indicator`, AG会获取HF的相关信息, 此处耳机不支持, 就不列举了...
+  
+4. 如果HF支持`HF Indicator`, AG会获取HF的相关信息, 此处耳机不支持, 就不列举了...
 
-至此,  Service Level Connection建立完成.
+**至此,  Service Level Connection建立完成.**
 
