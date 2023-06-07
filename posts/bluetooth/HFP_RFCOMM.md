@@ -32,7 +32,8 @@ HFP有两个角色:
 ![image.png](https://cdn.jsdelivr.net/gh/zabbits/cdn@main/picgo/20230605225211.png)
   AG回复`+BRSF`告知HF其支持的特性:
 ![image.png](https://cdn.jsdelivr.net/gh/zabbits/cdn@main/picgo/20230605230318.png)
- ### AG和HF的特性解释(TODO 补充完整)
+### AG和HF的特性解释(TODO 补充完整)
+#### HF
 - `Call waiting or 3-way calling`: 呼叫等待或三方通话
 	-  呼叫等待: 允许用户在通话时接收另一个来电
 	-  三方通话: 允许用户同时和其他两个用户进行通话.
@@ -43,10 +44,25 @@ HFP有两个角色:
 - `CLI presentation capability`: 来电显示
 	- HF通过发送`AT+CLIP=0`禁用, `AT+CLIP=1`启用.
 	- AG可以通过发送`+CLIP`携带来电信息给HF.
-- Voice Recognition Activation: 语音识别功能, 如果激活, HF可以通过语音命令控制AG
-	- HF发送`AT+BVRA=0`禁用, `AT+BVRA=1`激活.
+- `Voice recognition activation`: 语音识别激活, HF启动或关闭AG的`Voice Recognition Function`
+    - 开启后, HF可以通过语音命令控制AG
+	- HF发送`AT+BVRA=0`禁用, `AT+BVRA=1`激活
 	- AG发送`+BVRA`报告激活状态
-1. 如果HF和AG都支持`Codec negotiation`, 那么HF端发送`AT+BAC` 告知AG其支持的编解码器(TODO codec类别):
+- `Remote volume control`: 远程音量控制, HF控制AG的音量.
+- `Enhanced call status`: 增强的呼叫状态.
+- `Enhanced call control`: 增强的呼叫控制.
+- `Codec negotiation`: 音频编解码器协商.
+    - 在进行通信时, AG与HF需要使用同一个音频编解码器.
+- `HF Indicators`: HF可以向AG报告设备的一些状态信息, 如电池电量、信号强度等.
+- `eSCO S4`: 
+    - eSCO: Extended Synchronous Connection Oriented
+    - S4: eSCO的一种特定设置, 定义了一些特定的参数, 用于提高音频传输的音质
+
+#### AG
+- `Voice recognition function`: 语音识别功能. AG识别用户语音指令功能. 例如用户通过语音进行拨打电话.
+
+
+2. 如果HF和AG都支持`Codec negotiation`, 那么HF端发送`AT+BAC` 告知AG其支持的编解码器(TODO codec类别):
 ![image.png](https://cdn.jsdelivr.net/gh/zabbits/cdn@main/picgo/20230605231014.png)
 
 3. HF发送`AT+CIND`获取`AG Indicators`(AG Indicators: 表示AG设备的一些特定状态或功能, 如电池电量、信号强度、通话状态):
