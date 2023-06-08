@@ -107,3 +107,110 @@ HFP有两个角色:
 
 **至此,  Service Level Connection建立完成.**
 
+
+## AT指令
+### AT+BRSF
+Bluetooth Retrive Supported Features.
+通知AG端HF所支持的特性, 并请求AG支持的特性.
+- 语法: `AT+BRSF=<HF supported features bitmap>`
+- HF supported features bitmap可取以下值:
+
+bit位 | 特性
+--- | ---
+0 | EC and/or NR function
+1 | Three-way calling
+2 | CLI presentation capability
+3 | Voice recognition activation
+4 | Remote volume control
+5 | Enhanced call status
+6 | Enhanced call
+7 | Codec negotiation
+8 | HF Indicators
+9 | eSCO S4 Settings Supported
+10 | Enhanced Voice Recognition Status
+11 | Voice Recognition Text
+12-31 | Reserved for future use
+
+### +BRSF
+> AG回复`AT+BRSF`指令, 通知HF端AG所支持的特性.
+- 语法: `+BRSF: <AG supported features bitmap>`
+- AG supported features bitmap可以取以下值:
+
+bit位 | 特性
+--- | ---
+0 | Three-way calling
+1 | EC and/or NR function
+2  | Voice recognition function
+3  | In-band ring tone capability
+4  | Attach a number to a voice tag
+5  | Ability to reject a call
+6  | Enhanced call status
+7  | Enhanced call control
+8  | Extended Error Result Codes
+9  | Codec negotiation
+10  | HF Indicators
+11  | eSCO S4 Settings Supported
+12  | Enhanced Voice Recognition Status
+13  | Voice Recognition Text
+14-31  | Reserved for future
+
+### AT+BAC
+Bluetooth Available Codec.
+> HF通知AG端其所支持的codec.
+- 语法: `AT+BAC= [<u1>[,<u2>[,...[,<un>]]]]`, 这里的u1,u2..un是codec的id.
+- 常见的codec: CVSD(id = 1), mSBC(id = 2)
+
+### AT+CIND
+Call INDicators.
+> 有关AG indicators的AT命令
+- `AT+CIND?`: 读取AG所支持的indicators.
+- `AT+CIND=?`: 获取当前AG indicators的状态
+- HFP目前只有7个indicator: 
+    - service
+    - call
+    - callsetup
+    - callheld
+    - signal
+    - roam
+    - battchg
+
+### +CIND
+> 回复当前AG indicators的状态
+
+### AT+CMER
+Call Mode Event Reporting.
+> 主要是用于控制AG端如何报告indicators的变化.
+- `AT+CMER=3,0,0,1`: 激活AG端`indicator events reporting`
+- `AT+CMER=3,0,0,0`: 关闭AG端`indicator events reporting`
+
+### +CIEV
+Call Indicators EVent.(???)
+> AG端主动报告indicators的变化给HF.
+
+### AT+CHLD
+TODO
+
+### AT+NREC
+Noise Reduction and Echo Canceling.
+> 关闭NREC功能.
+- 语法: `AT+NREC=<nrec>`
+- 目前只有`AT+NREC=0`用于关闭NREC.
+
+### AT+VGM
+Voice Gain of Microphone.
+> HF向AG报告其麦克风的增益级别.
+- 语法: `AT+VGM=<gain>`
+- gain的取值在0-15之间.
+
+### AT+VGS
+Voice Gain of Speaker.
+> HF向AG报告其扬声器的增益级别.
+- 语法: `AT+VGS=<gain>`
+- gain取值在0-15之间.
+
+### AT+BIA
+Bluetooth Indicators Activation.
+> 激活或关闭Indicators.
+- 语法: `AT+BIA=[[<indrep 1>][,[<indrep 2>][,…[,[<indrep n>]]]]]]`
+- 1代表激活, 0代表关闭
+- 如`AT+BIA=1,1,1,1,1,1,1`, 激活全部的indicator.
