@@ -35,15 +35,15 @@ HFP有两个角色:
 ### AG和HF的特性解释
 #### HF
 - `EC and/or NR function`: 回声消除和/或噪声抑制
-	  - EC(Echo Cancellation): 减小或消除音频信号中的回声.
-	  - NR(Noise Reduction): 减小音频信号中的背景噪声(如车辆噪声, 风声等).
-	  - HF通过发送`AT+NREC=0`关闭这些功能, 发送`AT+NREC=1`开启(NREC: Noise Reduction and Echo Cancelling).
+    - EC(Echo Cancellation): 减小或消除音频信号中的回声.
+    - NR(Noise Reduction): 减小音频信号中的背景噪声(如车辆噪声, 风声等).
+    - HF通过发送`AT+NREC=0`关闭这些功能(NREC: Noise Reduction and Echo Cancelling).
 - `Call waiting or 3-way calling`: 呼叫等待或三方通话
-	  -  呼叫等待: 允许用户在通话时接收另一个来电
-	  -  三方通话: 允许用户同时和其他两个用户进行通话.
+    - 呼叫等待: 允许用户在通话时接收另一个来电
+    - 三方通话: 允许用户同时和其他两个用户进行通话.
 - `CLI presentation capability`: 来电显示
-	  - HF通过发送`AT+CLIP=0`禁用, `AT+CLIP=1`启用.
-	  - AG可以通过发送`+CLIP`携带来电信息给HF.
+    - HF通过发送`AT+CLIP=0`禁用, `AT+CLIP=1`启用.
+    - AG可以通过发送`+CLIP`携带来电信息给HF.
 - `Voice recognition activation`: 语音识别激活, HF启动或关闭AG的`Voice Recognition Function`
     - 开启后, HF可以通过语音命令控制AG
 	  - HF发送`AT+BVRA=0`禁用, `AT+BVRA=1`激活
