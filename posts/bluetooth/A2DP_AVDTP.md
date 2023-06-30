@@ -16,7 +16,7 @@ A2DP分为两个角色:
 ![image.png](https://cdn.jsdelivr.net/gh/zabbits/cdn@main/picgo/20230524001027.png)
 
 
-通常在手机连接耳机播放音乐, 手机端作为SRC, 耳机端作为SNR.
+通常在手机连接耳机播放音乐, 手机端作为SRC, 耳机端作为SNK.
 
 而音频数据的分发需要通过AVDTP.
 ![image.png](https://cdn.jsdelivr.net/gh/zabbits/cdn@main/picgo/20230524001332.png)

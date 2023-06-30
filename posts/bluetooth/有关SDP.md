@@ -22,7 +22,7 @@ tags:
 
 
 ## SDP举例
-SDP发起L2CAP连接, 完成连接返回目标CID:
+建立SDP相关的L2CAP连接, 完成连接返回目标CID:
 ![image.png](https://cdn.jsdelivr.net/gh/zabbits/cdn@main/picgo/20230523001832.png)
 
 查询PnPInfo:
