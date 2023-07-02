@@ -69,9 +69,9 @@ public SystemService startServiceFromJar(String className, String path) {
 接着通过classLoader加载`BluetoothService`类(可以看到BluetoothService是SystemService的子类, 关于SystemService稍后再详细介绍), 这里的代码就不进去看了(感兴趣可以自行了解).
 最后就是调用`startService`方法启动蓝牙服务啦:
 
-### startService(Class<T> serviceClass)
+### startService(Class\<T\> serviceClass)
 注意这里的startService的参数是`Class<T>`类型, 从这里也就可以看出接下来肯定是要反射去构造这个类实例了, 这里反射我也就不过多介绍了(
-这里简单提一下`BluetoothService`在构造方法中做了一些初始化的步骤, 再介绍`BluetoothService`时再做详细说明了.):
+这里简单提一下`BluetoothService`在构造方法中做了一些初始化的步骤, 在介绍`BluetoothService`时再做详细说明了.):
 ```java
 public <T extends SystemService> T startService(Class<T> serviceClass) {
     try {
@@ -142,6 +142,55 @@ public void startService(@NonNull final SystemService service) {
 
 ## SystemService
 在查看`BluetoothService`之前, 我们先来看一下`SystemService`. 每个系统服务类都需要继承自这个类.
+`SystemService`主要定义了一些生命周期的回调函数, 用于每个阶段调用.
+
+接下来看一下核心的生命周期方法:
+首先是`onStart`方法, 用于去发布binder service:
+```java
+public abstract void onStart();
+```
+
+`onBootPhase`在不同的boot阶段进行调用.
+```java
+public void onBootPhase(@BootPhase int phase) {}
+```
+
+接下来进入到BluetoothService的分析:
+
+## BluetoothService
+我们可以看到在BluetoothService的构造方法中初始化了`BluetoothManagerService`:
+```kotlin
+init {
+    mHandlerThread = HandlerThread("BluetoothManagerService")
+    mHandlerThread.start()
+    mBluetoothManagerService = BluetoothManagerService(context, mHandlerThread.getLooper())
+}
+```
+
+在来看一下核心的一些回调函数的实现, 首先是`onStart`:
+```kotlin
+override fun onStart() {}
+```
+我们可以看到在`onStart`什么都没有做.
+
+接着是`onBootPhase`: 
+```kotlin
+override fun onBootPhase(phase: Int) {
+    if (phase == SystemService.PHASE_SYSTEM_SERVICES_READY) {
+        publishBinderService(
+            BluetoothAdapter.BLUETOOTH_MANAGER_SERVICE,
+            mBluetoothManagerService.getBinder()
+        )
+    }
+}
+```
+可以看到在`PHASE_SYSTEM_SERVICES_READY`阶段会发布一个binder service.
+
+根据上面的分析可以得到, `BluetoothService`将核心操作都交由`BluetoothManagerService`进行操作, 所以接下来我们看一下`BluetoothManagerService`
+
+## BluetoothManagerService
+首先介绍一下BluetoothManagerService的核心职责:
+
 
 TODO
 
