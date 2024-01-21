@@ -1,6 +1,6 @@
 ---
-title: 编译AOSP13蓝牙模块
-description: 编译AOSP13蓝牙模块
+title: 编译AOSP12蓝牙模块
+description: 编译AOSP12蓝牙模块
 date: 2024-01-21
 tags:
   - 蓝牙
